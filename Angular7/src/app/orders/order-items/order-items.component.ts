@@ -57,10 +57,10 @@ export class OrderItemsComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (this.validateForm(form.value)) {
-      if (this.data.orderItemIndex == null)
+      if (this.data.OrderItemIndex == null)
         this.orderSevice.orderItems.push(form.value);
       else
-        this.orderSevice.orderItems[this.data.orderItemIndex] = form.value;
+        this.orderSevice.orderItems[this.data.OrderItemIndex] = form.value;
       this.dialogRef.close();
     }
   }

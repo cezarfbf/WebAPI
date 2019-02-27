@@ -4,8 +4,9 @@ import { NgForm } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OrderItemsComponent } from '../order-items/order-items.component';
 import { Customer } from 'src/app/shared/customer.model';
-// import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CustomerService } from 'src/app/shared/customer.service';
 
 @Component({
   selector: 'app-order',
@@ -18,13 +19,27 @@ export class OrderComponent implements OnInit {
   isValid: boolean = true;
 
   constructor(private service: OrderService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private customerService: CustomerService,
+    private toastr: ToastrService,
+    private router: Router,
+    private currentRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.resetFrom();
+    let orderID = this.currentRoute.snapshot.paramMap.get('id');
+    if (orderID == null)
+      this.resetForm();
+    else {
+      this.service.getOrderByID(parseInt(orderID)).then(res => {
+        this.service.formData = res.order;
+        this.service.orderItems = res.orderDetails;
+      });
+    }
+
+    this.customerService.getCustomerList().then(res => this.customerList = res as Customer[]);
   }
 
-  resetFrom(form?: NgForm){
+  resetForm(form?: NgForm){
     if (form = null)
      form.resetForm();
     this.service.formData ={
@@ -32,7 +47,8 @@ export class OrderComponent implements OnInit {
       OrderNo: Math.floor(100000+Math.random()*900000).toString(),
       CustomerID: 0,
       PMethod: '',
-      GTotal: 0
+      GTotal: 0,
+      DeletedOrderItemIDs: ''
     };
     this.service.orderItems = [];
   }
@@ -43,15 +59,17 @@ export class OrderComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.width = "50%";
     dialogConfig.data = {OrderItemIndex, OrderID};
-    this.dialog.open(OrderItemsComponent,dialogConfig);
+    this.dialog.open(OrderItemsComponent,dialogConfig).afterClosed().subscribe(res => {
+      this.updateGrandTotal();
+    });
 
   }
 
   onDeleteOrderItem(orderItemID: number, i: number) {
-    // if (orderItemID != null)
-    //   this.service.formData.DeletedOrderItemIDs += orderItemID + ",";
-    // this.service.orderItems.splice(i, 1);
-    // this.updateGrandTotal();
+    if (orderItemID != null)
+      this.service.formData.DeletedOrderItemIDs += orderItemID + ",";
+    this.service.orderItems.splice(i, 1);
+    this.updateGrandTotal();
   }
 
   updateGrandTotal() {
@@ -72,13 +90,13 @@ export class OrderComponent implements OnInit {
 
 
   onSubmit(form: NgForm) {
-    // if (this.validateForm()) {
-    //   this.service.saveOrUpdateOrder().subscribe(res => {
-    //     this.resetForm();
-    //     this.toastr.success('Submitted Successfully', 'Restaurent App.');
-    //     this.router.navigate(['/orders']);
-    //   })
-    // }
+    if (this.validateForm()) {
+      this.service.saveOrUpdateOrder().subscribe(res => {
+        this.resetForm();
+        this.toastr.success('Submitted Successfully', 'Restaurent App.');
+        this.router.navigate(['/orders']);
+      })
+    }
   }
 
 }

@@ -30,5 +30,7 @@ namespace WebAPI.Models
         public virtual DbSet<Item> Item { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderItems> OrderItems { get; set; }
+        public object Orders { get; internal set; }
+        public object Customers { get; internal set; }
     }
 }
