@@ -15,6 +15,7 @@ export class OrderItemsComponent implements OnInit {
   formData: OrderItem;
   itemList: Item[];
   isValid: boolean = true;
+  isText: boolean = false;
   
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
@@ -52,7 +53,10 @@ export class OrderItemsComponent implements OnInit {
   }
 
   updateTotal() {
-    this.formData.Total = parseFloat((this.formData.Quantity * this.formData.Price).toFixed(2));
+    if (!isNaN(this.formData.Quantity))
+     this.formData.Total = parseFloat((this.formData.Quantity * this.formData.Price).toFixed(2));
+    else
+     this.formData.Total = 0;
   }
 
   onSubmit(form: NgForm) {
@@ -62,15 +66,19 @@ export class OrderItemsComponent implements OnInit {
       else
         this.orderSevice.orderItems[this.data.OrderItemIndex] = form.value;
       this.dialogRef.close();
+    }else{
+      this.formData.Quantity
     }
   }
 
   validateForm(formData: OrderItem) { 
     this.isValid = true;
-    if (formData.ItemID == 0)
+    if (formData.ItemID == 0 || formData.Quantity == 0)
       this.isValid = false;
-    else if (formData.Quantity == 0)
+    else if (isNaN(formData.Quantity)){
       this.isValid = false;
+      this.isText = true;
+    }
     return this.isValid;
   }
 

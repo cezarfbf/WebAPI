@@ -48,6 +48,7 @@ export class OrderComponent implements OnInit {
       CustomerID: 0,
       PMethod: '',
       GTotal: 0,
+      OrderDate: new Date(),
       DeletedOrderItemIDs: ''
     };
     this.service.orderItems = [];

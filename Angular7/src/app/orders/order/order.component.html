@@ -19,6 +19,14 @@
           <option *ngFor="let item of customerList" value="{{item.CustomerID}}">{{item.Name}}</option>
         </select>
       </div>
+      <div class="form-group">
+        <label>Data</label>
+        <select name="OrderData" #OrderData="ngModel" [(ngModel)]="service.formData.OrderData" class="form-control"></select>
+        <!-- [class.is-invalid]="!isValid && service.formData.CustomerID==0"> -->
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of customerList" value="{{item.CustomerID}}">{{item.Name}}</option>
+        </select>
+      </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">

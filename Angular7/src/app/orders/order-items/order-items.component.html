@@ -25,7 +25,7 @@
     <div class="form-group col-md-6">
       <label>Quantity</label>
       <input name="Quantity" #Quantity="ngModel" [(ngModel)]="formData.Quantity" class="form-control"
-      (keyup)="updateTotal()" [class.is-invalid]="!isValid && formData.Quantity==0">
+      (keyup)="updateTotal()" [class.is-invalid]="(!isValid && formData.Quantity==0) || isText">
     </div>
   </div>
   <div class="form-group">
