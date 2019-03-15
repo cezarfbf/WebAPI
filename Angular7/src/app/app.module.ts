@@ -4,15 +4,19 @@ import { OrderComponent } from './orders/order/order.component';
 import { OrderItemsComponent } from './orders/order-items/order-items.component';
 import { OrderService } from './shared/order.service';
 
+import { AppRoutingModule } from './app-routing.module';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
-
+// import { MatDatepickerModule } from '@angular/material/datepicker';
+// import { MatMomentDateModule } from '@angular/material-moment-adapter';
+// import { MatFormFieldModule } from '@angular/material';
+// import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 
 
 
@@ -27,10 +31,15 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
     HttpClientModule,
     ToastrModule.forRoot()
+    // MatDatepickerModule,
+    // MatMomentDateModule,
+    // MatFormFieldModule,
+    // BsDatepickerModule.forRoot()
   ],
   entryComponents: [OrderItemsComponent], 
   providers: [OrderService],

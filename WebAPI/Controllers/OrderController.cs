@@ -26,7 +26,8 @@ namespace WebAPI.Controllers
                               a.OrderNo,
                               Customer = b.Name,
                               a.PMethod,
-                              a.GTotal
+                              a.GTotal,
+                              a.OrderDate
                           }).ToList();
 
             return result;
@@ -46,6 +47,7 @@ namespace WebAPI.Controllers
                              a.CustomerID,
                              a.PMethod,
                              a.GTotal,
+                             a.OrderDate,
                              DeletedOrderItemIDs = ""
                          }).FirstOrDefault();
 

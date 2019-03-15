@@ -4,6 +4,7 @@
     <th>Customer</th>
     <th>P. Method</th>
     <th>G. Total</th>
+    <th>Date</th>
     <th>
       <a class="btn btn-outline-success" routerLink="/order"><i class="fa fa-plus-square"></i> Create New</a>
     </th>
@@ -14,6 +15,7 @@
       <td (click)="openForEdit(item.OrderID)">{{item.Customer}}</td>
       <td (click)="openForEdit(item.OrderID)">{{item.PMethod}}</td>
       <td (click)="openForEdit(item.OrderID)">{{item.GTotal}}</td>
+      <td (click)="openForEdit(item.OrderID)">{{item.DateOrder}}</td>
       <td>
           <a class="btn text-danger" (click)="onOrderDelete(item.OrderID)"><i class="fa fa-trash fa-lg"></i></a>
       </td>

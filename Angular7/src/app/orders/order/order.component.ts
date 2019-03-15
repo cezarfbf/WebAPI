@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderService } from 'src/app/shared/order.service';
-import { NgForm } from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { NgForm, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+
+//Internal
 import { OrderItemsComponent } from '../order-items/order-items.component';
 import { Customer } from 'src/app/shared/customer.model';
-import { ToastrService } from 'ngx-toastr';
-import { Router, ActivatedRoute } from '@angular/router';
+
+//Services
+import { OrderService } from 'src/app/shared/order.service';
 import { CustomerService } from 'src/app/shared/customer.service';
+import { ToastrService } from 'ngx-toastr';
+
+// Material Components
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-order',
